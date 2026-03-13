@@ -1,0 +1,22 @@
+{
+  "reviews": [
+    {
+      "name": "Sanaullah Khokhar",
+      "location": "Haripur",
+      "text": "The most peaceful place I've visited. Staff are well mannered and the food was absolutely delicious. A 10/10 experience every time.",
+      "stars": "5"
+    },
+    {
+      "name": "Zainab Bibi",
+      "location": "Haripur",
+      "text": "Pleasant atmosphere and amazing food. The special pizza and loaded fries were absolutely delicious. I'll definitely be coming back.",
+      "stars": "5"
+    },
+    {
+      "name": "Samiullah Liaqat",
+      "location": "Haripur",
+      "text": "Everything feels like home here. Incredible pizza, warm hospitality, and a vibe that makes you want to stay for hours.",
+      "stars": "5"
+    }
+  ]
+}

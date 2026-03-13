@@ -1,0 +1,11 @@
+{
+  "category_id": "grill",
+  "category_name": "Grill",
+  "category_desc": "Flame-grilled daily with our signature marinades",
+  "emoji": "\uD83D\uDD25",
+  "order": 2,
+  "items": [
+    { "name": "BBQ Cheese Wrap",        "description": "Juicy flame-grilled chicken in a warm wrap with melted cheese and our house BBQ sauce.",   "price_label": "Popular",  "badge": "Bestseller", "image": "" },
+    { "name": "Chicken Grill",          "description": "Whole marinated grilled chicken served with our secret spice blend and fresh garnish.",    "price_label": "Classic",  "badge": "",           "image": "" }
+  ]
+}

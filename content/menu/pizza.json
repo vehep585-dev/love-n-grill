@@ -1,0 +1,12 @@
+{
+  "category_id": "pizza",
+  "category_name": "Pizza",
+  "category_desc": "Handcrafted on fresh dough, baked to perfection",
+  "emoji": "\uD83C\uDF55",
+  "order": 1,
+  "items": [
+    { "name": "Love n Grill Special", "description": "Our iconic creation \u2014 bold Mughlai-inspired flavours, melted cheese, and premium toppings.", "price_label": "Premium", "badge": "Signature", "image": "" },
+    { "name": "Mughlai Pizza",        "description": "Rich, layered Mughlai spices on a perfectly baked golden crust with mozzarella.",             "price_label": "Premium", "badge": "",          "image": "" },
+    { "name": "Chicken Fajita",       "description": "Smoky fajita seasoned chicken with colourful bell peppers and cheese.",                        "price_label": "Classic", "badge": "",          "image": "" }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "dishes": [
+    {
+      "name": "Love n Grill Special Pizza",
+      "description": "Our signature handcrafted pizza loaded with bold Mughlai-inspired flavors, melted cheese, and premium toppings. The talk of Haripur.",
+      "tag": "Must Try",
+      "badge": "Signature",
+      "emoji": "\uD83C\uDF55",
+      "image": ""
+    },
+    {
+      "name": "BBQ Cheese Wrap",
+      "description": "Juicy flame-grilled chicken wrapped in warm bread with melted cheese, fresh veggies, and our house BBQ sauce.",
+      "tag": "Bestseller",
+      "badge": "",
+      "emoji": "\uD83C\uDF2F",
+      "image": ""
+    },
+    {
+      "name": "Loaded Fries",
+      "description": "Golden crispy fries piled high with signature sauces, toppings, and seasoning for an irresistible bite every time.",
+      "tag": "Fan Favorite",
+      "badge": "",
+      "emoji": "\uD83C\uDF5F",
+      "image": ""
+    },
+    {
+      "name": "Special Comfort Soup",
+      "description": "A rich, slow-cooked warm bowl crafted for cold evenings and good company. Pure comfort in every sip.",
+      "tag": "Chef's Choice",
+      "badge": "",
+      "emoji": "\uD83C\uDF5C",
+      "image": ""
+    }
+  ]
+}

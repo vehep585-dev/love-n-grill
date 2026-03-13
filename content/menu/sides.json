@@ -1,0 +1,12 @@
+{
+  "category_id": "sides",
+  "category_name": "Sides & Snacks",
+  "category_desc": "Perfect companions to any main dish",
+  "emoji": "\uD83C\uDF5F",
+  "order": 3,
+  "items": [
+    { "name": "Loaded Fries",    "description": "Golden fries piled with melted cheese, sauces, and jalape\u00f1os.", "price_label": "Popular",    "badge": "Fan Fav", "image": "" },
+    { "name": "Special Soup",    "description": "Rich warm comfort bowl, perfect any time.",                          "price_label": "Chef's Pick", "badge": "",        "image": "" },
+    { "name": "House Sauces",    "description": "Selection of homemade dipping and garnish sauces.",                  "price_label": "Add-on",      "badge": "",        "image": "" }
+  ]
+}

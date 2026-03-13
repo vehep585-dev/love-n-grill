@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love n Grill — Haripur</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --charcoal: #111111;
+    --red: #E63946;
+    --gold: #CFAE62;
+    --gold-light: #e8c97a;
+    --cream: #F8F5F0;
+    --cream-dark: #ede9e2;
+    --white: #ffffff;
+    --text-muted: #888;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--charcoal);
+    color: var(--cream);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    opacity: 0.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    transition: background 0.4s, backdrop-filter 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(18px);
+    padding: 14px 60px;
+    border-bottom: 1px solid rgba(207,174,98,0.15);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--charcoal) !important;
+    padding: 10px 24px;
+    border-radius: 2px;
+    font-weight: 700 !important;
+    transition: background 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--charcoal) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    text-align: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 60%, rgba(230,57,70,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 30%, rgba(207,174,98,0.12) 0%, transparent 50%),
+      linear-gradient(160deg, #0a0a0a 0%, #1a1008 50%, #0a0a0a 100%);
+    z-index: 0;
+  }
+  .ember {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(230,100,30,0.9), rgba(230,57,70,0.3) 60%, transparent);
+    animation: floatEmber linear infinite;
+    pointer-events: none;
+  }
+  @keyframes floatEmber {
+    0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(-110vh) translateX(var(--drift)) scale(0.3); opacity: 0; }
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 860px; padding: 0 40px;
+  }
+  .hero-eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--cream);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s 0.55s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+  .hero-subtitle {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(248,245,240,0.72);
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto 44px;
+    opacity: 0;
+    animation: fadeUp 1s 0.8s forwards;
+  }
+  .hero-btns {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 1s 1s forwards;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--charcoal);
+    padding: 16px 38px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    padding: 15px 38px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(248,245,240,0.4);
+    cursor: pointer;
+    transition: border-color 0.3s, color 0.3s, transform 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0; animation: fadeIn 1s 1.6s forwards;
+  }
+  .hero-scroll span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(207,174,98,0.7);
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 110px 60px; }
+  .section-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 16px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-bottom: 24px;
+  }
+
+  /* ─── TRUST BAR ─── */
+  #trust {
+    background: var(--gold);
+    padding: 16px 60px;
+    display: flex; align-items: center; justify-content: center; gap: 40px;
+    flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+  }
+  .trust-sep { color: rgba(17,17,17,0.3); font-size: 1.2rem; }
+
+  /* ─── EXPERIENCE ─── */
+  #experience {
+    background: #0d0d0d;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; padding: 0;
+    min-height: 620px;
+  }
+  .exp-visual {
+    position: relative;
+    overflow: hidden;
+    background: #1a0f06;
+  }
+  .exp-visual-inner {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at center, rgba(230,80,30,0.25) 0%, transparent 65%),
+      linear-gradient(135deg, #1a0a04 0%, #0d0d0d 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .grill-art {
+    font-size: 9rem;
+    filter: drop-shadow(0 0 40px rgba(230,100,30,0.6));
+    animation: glowPulse 3s infinite ease-in-out;
+  }
+  @keyframes glowPulse {
+    0%,100% { filter: drop-shadow(0 0 30px rgba(230,100,30,0.5)); }
+    50% { filter: drop-shadow(0 0 70px rgba(230,100,30,0.9)) drop-shadow(0 0 120px rgba(207,174,98,0.3)); }
+  }
+  .exp-content {
+    padding: 90px 70px;
+    display: flex; flex-direction: column; justify-content: center;
+    background: #0d0d0d;
+  }
+  .exp-content p {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: rgba(248,245,240,0.7);
+    margin-bottom: 36px;
+  }
+  .exp-stats { display: flex; gap: 48px; margin-top: 8px; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* ─── DISHES ─── */
+  #dishes { background: #0a0a0a; }
+  .dishes-header { text-align: center; margin-bottom: 72px; }
+  .dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .dish-card {
+    background: #141414;
+    border: 1px solid rgba(207,174,98,0.1);
+    padding: 40px 28px 32px;
+    position: relative; overflow: hidden;
+    transition: transform 0.4s ease, border-color 0.4s, box-shadow 0.4s;
+    cursor: pointer;
+  }
+  .dish-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top, rgba(207,174,98,0.07), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .dish-card:hover { transform: translateY(-8px); border-color: rgba(207,174,98,0.4); box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+  .dish-card:hover::before { opacity: 1; }
+  .dish-emoji { font-size: 3rem; margin-bottom: 20px; display: block; }
+  .dish-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .dish-desc {
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: rgba(248,245,240,0.55);
+    margin-bottom: 24px;
+  }
+  .dish-tag {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(207,174,98,0.4);
+    padding: 5px 12px;
+  }
+  .dish-featured {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--red);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: white;
+    padding: 5px 10px;
+  }
+
+  /* ─── REVIEWS ─── */
+  #reviews {
+    background: linear-gradient(160deg, #0f0a04 0%, #111111 100%);
+    text-align: center;
+  }
+  .reviews-header { margin-bottom: 64px; }
+  .reviews-header .divider { margin: 0 auto 24px; }
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1100px; margin: 0 auto 64px;
+  }
+  .review-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(207,174,98,0.15);
+    padding: 42px 34px;
+    text-align: left;
+    position: relative;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .review-card:hover { transform: translateY(-5px); border-color: rgba(207,174,98,0.35); }
+  .review-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    line-height: 0.5;
+    color: var(--gold);
+    opacity: 0.3;
+    margin-bottom: 20px;
+  }
+  .review-stars { color: var(--gold); font-size: 0.95rem; letter-spacing: 3px; margin-bottom: 16px; }
+  .review-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgba(248,245,240,0.82);
+    margin-bottom: 24px;
+  }
+  .review-author {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .review-author span { color: var(--text-muted); font-weight: 400; }
+
+  /* ─── WHY US ─── */
+  #why {
+    background: var(--charcoal);
+    border-top: 1px solid rgba(207,174,98,0.12);
+  }
+  .why-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .why-features { display: flex; flex-direction: column; gap: 44px; }
+  .feature {
+    display: flex; gap: 24px;
+    transition: transform 0.3s;
+  }
+  .feature:hover { transform: translateX(6px); }
+  .feature-icon {
+    width: 54px; height: 54px; flex-shrink: 0;
+    background: rgba(207,174,98,0.1);
+    border: 1px solid rgba(207,174,98,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .feature-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .feature-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: rgba(248,245,240,0.55);
+  }
+  .why-visual {
+    position: relative;
+    height: 520px;
+    background: linear-gradient(145deg, #1a0f06, #0a0a0a);
+    border: 1px solid rgba(207,174,98,0.15);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .why-visual-glow {
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(230,80,30,0.2), transparent 70%);
+    animation: moveGlow 6s infinite ease-in-out alternate;
+  }
+  @keyframes moveGlow {
+    from { transform: translate(-60px, -40px); }
+    to { transform: translate(60px, 40px); }
+  }
+  .why-big-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: rgba(207,174,98,0.08);
+    text-align: center;
+    position: absolute;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    user-select: none;
+  }
+  .why-center-icon { font-size: 5rem; position: relative; z-index: 2; filter: drop-shadow(0 0 30px rgba(230,80,30,0.5)); }
+
+  /* ─── MENU PREVIEW ─── */
+  #menu { background: #0a0a0a; text-align: center; }
+  .menu-header { margin-bottom: 64px; }
+  .menu-header .divider { margin: 0 auto 24px; }
+  .menu-tabs {
+    display: flex; justify-content: center; gap: 0;
+    margin-bottom: 48px;
+    border: 1px solid rgba(207,174,98,0.2);
+    display: inline-flex;
+  }
+  .tab-btn {
+    padding: 14px 32px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: transparent;
+    color: rgba(248,245,240,0.5);
+    border: none; cursor: pointer;
+    transition: all 0.3s;
+    border-right: 1px solid rgba(207,174,98,0.2);
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--gold);
+    color: var(--charcoal);
+  }
+  .menu-items {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px; margin: 0 auto 56px;
+  }
+  .menu-item {
+    background: #141414;
+    border: 1px solid rgba(207,174,98,0.1);
+    padding: 28px 24px;
+    text-align: left;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .menu-item:hover { border-color: rgba(207,174,98,0.35); transform: translateY(-3px); }
+  .menu-item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .menu-item-desc {
+    font-size: 0.78rem;
+    color: rgba(248,245,240,0.45);
+    line-height: 1.55;
+  }
+  .menu-item-price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-top: 14px;
+  }
+
+  /* ─── GALLERY ─── */
+  #gallery { background: #0d0d0d; text-align: center; }
+  .gallery-header { margin-bottom: 56px; }
+  .gallery-header .divider { margin: 0 auto 24px; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 260px 260px;
+    gap: 12px;
+    max-width: 1100px; margin: 0 auto 40px;
+  }
+  .gallery-cell {
+    overflow: hidden;
+    position: relative;
+    background: #1a1008;
+  }
+  .gallery-cell:first-child { grid-row: 1 / 3; }
+  .gallery-inner {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    transition: transform 0.6s ease;
+    background: linear-gradient(135deg, rgba(207,174,98,0.08) 0%, rgba(230,57,70,0.08) 100%);
+  }
+  .gallery-cell:hover .gallery-inner { transform: scale(1.08); }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .gallery-cell:hover .gallery-overlay { opacity: 1; }
+
+  /* ─── RESERVATION ─── */
+  #reservation {
+    background: linear-gradient(160deg, #1a0f06 0%, #0a0a0a 100%);
+    text-align: center;
+  }
+  .res-header { margin-bottom: 60px; }
+  .res-header .divider { margin: 0 auto 24px; }
+  .res-form {
+    max-width: 680px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .res-form .full { grid-column: 1 / -1; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; text-align: left; }
+  .form-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .form-input {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(207,174,98,0.2);
+    padding: 14px 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: var(--cream);
+    outline: none;
+    transition: border-color 0.3s, background 0.3s;
+    width: 100%;
+  }
+  .form-input:focus { border-color: var(--gold); background: rgba(207,174,98,0.06); }
+  .form-input::placeholder { color: rgba(248,245,240,0.3); }
+  select.form-input option { background: #1a1a1a; }
+  .res-submit {
+    width: 100%;
+    padding: 18px;
+    background: var(--gold);
+    color: var(--charcoal);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 8px;
+  }
+  .res-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* ─── LOCATION ─── */
+  #location {
+    background: #111111;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; padding: 0;
+    min-height: 400px;
+  }
+  .loc-map {
+    background: #141414;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+    min-height: 400px;
+    position: relative; overflow: hidden;
+  }
+  .loc-map::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(207,174,98,0.05), rgba(230,57,70,0.05));
+  }
+  .map-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(207,174,98,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(207,174,98,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .map-pin { position: relative; z-index: 2; filter: drop-shadow(0 0 20px rgba(230,57,70,0.6)); }
+  .loc-info {
+    padding: 80px 70px;
+    background: #111;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .loc-info p { font-size: 0.9rem; color: rgba(248,245,240,0.6); line-height: 1.8; margin-bottom: 32px; }
+  .info-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-bottom: 18px;
+  }
+  .info-icon { color: var(--gold); font-size: 1rem; margin-top: 2px; flex-shrink: 0; }
+  .info-text { font-size: 0.85rem; color: rgba(248,245,240,0.7); line-height: 1.5; }
+  .info-text strong { color: var(--cream); display: block; font-weight: 600; }
+  .loc-btns { display: flex; gap: 14px; margin-top: 32px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #080808;
+    border-top: 1px solid rgba(207,174,98,0.1);
+    padding: 80px 60px 40px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px; margin-bottom: 60px;
+  }
+  .footer-brand .nav-logo { font-size: 1.8rem; display: block; margin-bottom: 16px; }
+  .footer-brand p { font-size: 0.83rem; line-height: 1.75; color: rgba(248,245,240,0.45); max-width: 280px; }
+  .footer-col-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a {
+    font-size: 0.85rem;
+    color: rgba(248,245,240,0.5);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid rgba(207,174,98,0.1);
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(248,245,240,0.3);
+    font-family: 'Montserrat', sans-serif;
+  }
+  .footer-hearts { color: var(--red); }
+
+  /* ─── STICKY ELEMENTS ─── */
+  .sticky-order {
+    position: fixed; bottom: 90px; right: 30px; z-index: 900;
+    background: var(--red);
+    color: white;
+    padding: 14px 22px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 8px 32px rgba(230,57,70,0.4);
+    animation: bounceIn 1s 2s both;
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  .sticky-order:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(230,57,70,0.55); }
+  .sticky-wa {
+    position: fixed; bottom: 30px; right: 30px; z-index: 900;
+    width: 52px; height: 52px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    text-decoration: none;
+    animation: bounceIn 1s 2.2s both;
+    transition: transform 0.2s;
+  }
+  .sticky-wa:hover { transform: scale(1.12); }
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.6); }
+    70% { transform: scale(1.08); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ─── OFFER BANNER ─── */
+  .offer-banner {
+    background: var(--red);
+    text-align: center;
+    padding: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: white;
+    position: relative; z-index: 100;
+  }
+  .offer-banner span { background: white; color: var(--red); padding: 2px 8px; margin: 0 6px; font-weight: 900; }
+
+  /* ─── REVEAL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0; transform: translateX(-36px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0; transform: translateX(36px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ─── NOTIFICATION ─── */
+  .notification {
+    position: fixed; bottom: 160px; right: 30px; z-index: 800;
+    background: #1a1a1a;
+    border: 1px solid rgba(207,174,98,0.3);
+    padding: 16px 22px;
+    max-width: 260px;
+    opacity: 0; transform: translateX(120%);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+  }
+  .notification.show { opacity: 1; transform: translateX(0); }
+  .notif-stars { color: var(--gold); font-size: 0.75rem; }
+  .notif-text {
+    font-size: 0.75rem;
+    color: rgba(248,245,240,0.7);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  .notif-text strong { color: var(--gold); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    #experience { grid-template-columns: 1fr; }
+    .exp-visual { height: 260px; }
+    .dishes-grid { grid-template-columns: 1fr 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .why-inner { grid-template-columns: 1fr; }
+    .why-visual { display: none; }
+    .menu-items { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-cell:first-child { grid-row: auto; }
+    #location { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    #trust { padding: 16px 24px; gap: 20px; }
+    .trust-sep { display: none; }
+    .res-form { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .dishes-grid { grid-template-columns: 1fr; }
+    .menu-items { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    .exp-stats { gap: 28px; }
+    .offer-banner { font-size: 0.62rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Offer Banner -->
+<div class="offer-banner">
+  🔥 GRAND OFFER — <span>10% OFF</span> on your first visit — Show this to our staff!
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#hero" class="nav-logo">Love <span>n</span> Grill</a>
+  <ul class="nav-links">
+    <li><a href="#dishes">Menu</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reservation" class="nav-cta">Reserve Table</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <!-- Embers generated by JS -->
+  <div class="hero-content">
+    <div class="hero-eyebrow">✦ Haripur's Finest Dining Experience ✦</div>
+    <h1 class="hero-title">
+      Flame-Grilled Flavor.<br>
+      <em>Crafted With Love.</em>
+    </h1>
+    <p class="hero-subtitle">
+      Haripur's most comfortable place to relax, dine, and enjoy unforgettable flavors — crafted fresh with every flame.
+    </p>
+    <div class="hero-btns">
+      <a href="#dishes" class="btn-primary">View Menu</a>
+      <a href="#reservation" class="btn-outline">Reserve a Table</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div id="trust">
+  <div class="trust-item">⭐⭐⭐⭐⭐ <span>Loved By Haripur Foodies</span></div>
+  <div class="trust-sep">·</div>
+  <div class="trust-item">🔥 <span>Fresh Grill Every Day</span></div>
+  <div class="trust-sep">·</div>
+  <div class="trust-item">🤝 <span>Warm Hospitality</span></div>
+  <div class="trust-sep">·</div>
+  <div class="trust-item">🏡 <span>Peaceful Ambience</span></div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="exp-visual">
+    <div class="exp-visual-inner">
+      <div class="grill-art">🔥</div>
+    </div>
+  </div>
+  <div class="exp-content">
+    <div class="section-label reveal">Our Story</div>
+    <h2 class="section-title reveal">More Than Food —<br><em>It's an Experience</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">
+      Love n Grill was built for the people of Haripur who believe dining is more than a meal — it's a moment. Whether you're meeting friends, celebrating with family, or simply unwinding after a long day, our peaceful atmosphere makes every visit memorable.
+    </p>
+    <p class="reveal">
+      Every dish is grilled fresh, every guest is treated like family, and every corner of our space is designed for comfort.
+    </p>
+    <div class="exp-stats reveal">
+      <div>
+        <div class="stat-num">100+</div>
+        <div class="stat-label">Happy Guests Daily</div>
+      </div>
+      <div>
+        <div class="stat-num">4.8★</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Signature Dishes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE DISHES -->
+<section id="dishes">
+  <div class="dishes-header">
+    <div class="section-label reveal">Our Signature</div>
+    <h2 class="section-title reveal">The Dishes <em>Everyone Talks About</em></h2>
+    <div class="divider reveal" style="margin: 0 auto;"></div>
+  </div>
+  <div class="dishes-grid">
+    <div class="dish-card reveal">
+      <span class="dish-featured">Signature</span>
+      <span class="dish-emoji">🍕</span>
+      <div class="dish-name">Love n Grill Special Pizza</div>
+      <div class="dish-desc">Our signature handcrafted pizza loaded with bold Mughlai-inspired flavors, melted cheese, and premium toppings. The talk of Haripur.</div>
+      <div class="dish-tag">Must Try</div>
+    </div>
+    <div class="dish-card reveal">
+      <span class="dish-emoji">🌯</span>
+      <div class="dish-name">BBQ Cheese Wrap</div>
+      <div class="dish-desc">Juicy flame-grilled chicken wrapped in warm bread with melted cheese, fresh veggies, and our house BBQ sauce.</div>
+      <div class="dish-tag">Bestseller</div>
+    </div>
+    <div class="dish-card reveal">
+      <span class="dish-emoji">🍟</span>
+      <div class="dish-name">Loaded Fries</div>
+      <div class="dish-desc">Golden crispy fries piled high with signature sauces, toppings, and seasoning for an irresistible bite every time.</div>
+      <div class="dish-tag">Fan Favorite</div>
+    </div>
+    <div class="dish-card reveal">
+      <span class="dish-emoji">🍜</span>
+      <div class="dish-name">Special Comfort Soup</div>
+      <div class="dish-desc">A rich, slow-cooked warm bowl crafted for cold evenings and good company. Pure comfort in every sip.</div>
+      <div class="dish-tag">Chef's Choice</div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top: 56px;" class="reveal">
+    <a href="#menu" class="btn-primary">Explore Full Menu</a>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-header">
+    <div class="section-label">Voices of our Guests</div>
+    <h2 class="section-title">What Haripur <em>Is Saying</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">The most peaceful place I've visited. Staff are well mannered and the food was absolutely delicious. A 10/10 experience every time.</div>
+      <div class="review-author">Sanaullah Khokhar <span>— Haripur</span></div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Pleasant atmosphere and amazing food. The special pizza and loaded fries were absolutely delicious. I'll definitely be coming back.</div>
+      <div class="review-author">Zainab Bibi <span>— Haripur</span></div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Everything feels like home here. Incredible pizza, warm hospitality, and a vibe that makes you want to stay for hours.</div>
+      <div class="review-author">Samiullah Liaqat <span>— Haripur</span></div>
+    </div>
+  </div>
+  <div class="reveal">
+    <a href="#reservation" class="btn-primary">Experience It Yourself</a>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-inner">
+    <div>
+      <div class="section-label reveal-left">Why We're Different</div>
+      <h2 class="section-title reveal-left">Why People <em>Love Us</em></h2>
+      <div class="divider reveal-left"></div>
+      <div class="why-features">
+        <div class="feature reveal-left">
+          <div class="feature-icon">🔥</div>
+          <div>
+            <div class="feature-title">Freshly Grilled Every Time</div>
+            <div class="feature-desc">No shortcuts, no reheated food. Every dish is cooked fresh on the grill when you order it.</div>
+          </div>
+        </div>
+        <div class="feature reveal-left" style="transition-delay: 0.1s">
+          <div class="feature-icon">🪑</div>
+          <div>
+            <div class="feature-title">Comfortable Ambience</div>
+            <div class="feature-desc">Our space is designed for real comfort — relaxed seating, warm lighting, peaceful atmosphere.</div>
+          </div>
+        </div>
+        <div class="feature reveal-left" style="transition-delay: 0.2s">
+          <div class="feature-icon">🤝</div>
+          <div>
+            <div class="feature-title">Friendly, Caring Service</div>
+            <div class="feature-desc">Our staff treats every guest like a valued family member — attentive, warm, and genuine.</div>
+          </div>
+        </div>
+        <div class="feature reveal-left" style="transition-delay: 0.3s">
+          <div class="feature-icon">❤️</div>
+          <div>
+            <div class="feature-title">Made With Love</div>
+            <div class="feature-desc">Every recipe is crafted with passion. The name isn't just a brand — it's our promise.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual reveal-right">
+      <div class="why-visual-glow"></div>
+      <div class="why-big-text">LOVE<br>N<br>GRILL</div>
+      <div class="why-center-icon">🍽️</div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU PREVIEW -->
+<section id="menu">
+  <div class="menu-header">
+    <div class="section-label reveal">Our Menu</div>
+    <h2 class="section-title reveal">Crafted for <em>Every Craving</em></h2>
+    <div class="divider reveal" style="margin: 0 auto;"></div>
+  </div>
+  <div style="text-align:center;">
+    <div class="menu-tabs reveal">
+      <button class="tab-btn active" onclick="showTab('pizza', this)">Pizza</button>
+      <button class="tab-btn" onclick="showTab('grill', this)">Grill</button>
+      <button class="tab-btn" onclick="showTab('sides', this)">Sides</button>
+      <button class="tab-btn" onclick="showTab('drinks', this)">Drinks</button>
+    </div>
+  </div>
+  <div id="pizza" class="menu-tab-content">
+    <div class="menu-items">
+      <div class="menu-item"><div class="menu-item-name">Love n Grill Special</div><div class="menu-item-desc">Our signature creation — the one everyone comes back for</div><div class="menu-item-price">Premium</div></div>
+      <div class="menu-item"><div class="menu-item-name">Mughlai Pizza</div><div class="menu-item-desc">Rich Mughlai-inspired toppings on a perfectly baked crust</div><div class="menu-item-price">Premium</div></div>
+      <div class="menu-item"><div class="menu-item-name">Chicken Fajita</div><div class="menu-item-desc">Smoky fajita seasoned chicken with colorful peppers</div><div class="menu-item-price">Classic</div></div>
+    </div>
+  </div>
+  <div id="grill" class="menu-tab-content" style="display:none;">
+    <div class="menu-items">
+      <div class="menu-item"><div class="menu-item-name">BBQ Cheese Wrap</div><div class="menu-item-desc">Flame-grilled chicken wrapped with cheese and house sauce</div><div class="menu-item-price">Bestseller</div></div>
+      <div class="menu-item"><div class="menu-item-name">Chicken Grill</div><div class="menu-item-desc">Whole grilled chicken marinated in our secret spice blend</div><div class="menu-item-price">Classic</div></div>
+    </div>
+  </div>
+  <div id="sides" class="menu-tab-content" style="display:none;">
+    <div class="menu-items">
+      <div class="menu-item"><div class="menu-item-name">Loaded Fries</div><div class="menu-item-desc">Golden fries with sauces, cheese, and toppings</div><div class="menu-item-price">Fan Favorite</div></div>
+      <div class="menu-item"><div class="menu-item-name">Special Soup</div><div class="menu-item-desc">Rich warm comfort bowl, perfect any time</div><div class="menu-item-price">Chef's Pick</div></div>
+      <div class="menu-item"><div class="menu-item-name">House Sauces</div><div class="menu-item-desc">Selection of homemade dipping and garnish sauces</div><div class="menu-item-price">Add-on</div></div>
+    </div>
+  </div>
+  <div id="drinks" class="menu-tab-content" style="display:none;">
+    <div class="menu-items">
+      <div class="menu-item"><div class="menu-item-name">Soft Drinks</div><div class="menu-item-desc">Chilled classic beverages to accompany your meal</div><div class="menu-item-price">Available</div></div>
+      <div class="menu-item"><div class="menu-item-name">Fresh Beverages</div><div class="menu-item-desc">Seasonal fresh drinks made in-house daily</div><div class="menu-item-price">Seasonal</div></div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top: 40px;" class="reveal">
+    <a href="#reservation" class="btn-outline">Reserve & Dine In</a>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="section-label reveal">Our World</div>
+    <h2 class="section-title reveal">The Love n Grill <em>Experience</em></h2>
+    <div class="divider reveal" style="margin: 0 auto;"></div>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-cell">
+      <div class="gallery-inner">🍕</div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-cell">
+      <div class="gallery-inner">🔥</div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-cell">
+      <div class="gallery-inner">🍟</div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-cell">
+      <div class="gallery-inner">🌯</div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-cell">
+      <div class="gallery-inner">🪑</div>
+      <div class="gallery-overlay"></div>
+    </div>
+  </div>
+  <p style="font-family:'Montserrat',sans-serif; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-top:20px; text-align:center;" class="reveal">Follow our food journey on Instagram</p>
+</section>
+
+<!-- RESERVATION -->
+<section id="reservation">
+  <div class="res-header">
+    <div class="section-label reveal">Book Your Visit</div>
+    <h2 class="section-title reveal">Reserve Your <em>Table</em></h2>
+    <div class="divider reveal" style="margin: 0 auto;"></div>
+    <p style="color: rgba(248,245,240,0.55); font-size:0.9rem; max-width:460px; margin: 0 auto; line-height:1.7;" class="reveal">Secure your spot and let us prepare the perfect experience for you.</p>
+  </div>
+  <div class="res-form reveal">
+    <div class="form-group">
+      <label class="form-label">Your Name</label>
+      <input type="text" class="form-input" placeholder="Enter your name">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phone Number</label>
+      <input type="tel" class="form-input" placeholder="03XX-XXXXXXX">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Number of Guests</label>
+      <select class="form-input">
+        <option>1 Guest</option>
+        <option>2 Guests</option>
+        <option>3–4 Guests</option>
+        <option>5–6 Guests</option>
+        <option>7+ Guests (Group)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Preferred Date</label>
+      <input type="date" class="form-input">
+    </div>
+    <div class="form-group full">
+      <label class="form-label">Preferred Time</label>
+      <select class="form-input">
+        <option>12:00 PM – 2:00 PM (Lunch)</option>
+        <option>2:00 PM – 5:00 PM (Afternoon)</option>
+        <option>6:00 PM – 8:00 PM (Dinner)</option>
+        <option>8:00 PM – 10:00 PM (Late Dinner)</option>
+      </select>
+    </div>
+    <div class="full">
+      <button class="res-submit" onclick="handleBooking()">✦ Confirm Reservation</button>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="loc-map">
+    <div class="map-grid"></div>
+    <span class="map-pin" style="font-size:4rem;">📍</span>
+  </div>
+  <div class="loc-info">
+    <div class="section-label reveal">Find Us</div>
+    <h2 class="section-title reveal">Visit <em>Love n Grill</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">Come enjoy a relaxed, warm dining experience in the heart of Haripur. We'd love to have you.</p>
+    <div class="reveal">
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div class="info-text"><strong>Address</strong>Haripur, Khyber Pakhtunkhwa, Pakistan</div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🕐</div>
+        <div class="info-text"><strong>Opening Hours</strong>Daily: 12:00 PM – 11:00 PM</div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div class="info-text"><strong>Call / WhatsApp</strong>+92 XXX XXXXXXX</div>
+      </div>
+    </div>
+    <div class="loc-btns reveal">
+      <a href="#" class="btn-primary">Get Directions</a>
+      <a href="tel:+92XXXXXXXXXX" class="btn-outline">Call Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#hero" class="nav-logo">Love <span>n</span> Grill</a>
+      <p>Haripur's most comfortable dining experience. Flame-grilled flavors, warm hospitality, and memories worth making.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#dishes">Menu</a></li>
+        <li><a href="#experience">About Us</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#reservation">Reservations</a></li>
+        <li><a href="#location">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="#">+92 XXX XXXXXXX</a></li>
+        <li><a href="#">Haripur, KPK</a></li>
+        <li><a href="#">12:00 PM – 11:00 PM</a></li>
+        <li><a href="#"><span class="__cf_email__" data-cfemail="bcd5d2dad3fcd0d3cad9d2dbced5d0d092ccd7">[email&#160;protected]</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Follow Us</div>
+      <ul class="footer-links">
+        <li><a href="#">📸 Instagram</a></li>
+        <li><a href="#">📘 Facebook</a></li>
+        <li><a href="#">🎵 TikTok</a></li>
+        <li><a href="#">💬 WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Love n Grill, Haripur. All rights reserved.</div>
+    <div class="footer-copy">Made with <span class="footer-hearts">❤️</span> in Haripur</div>
+  </div>
+</footer>
+
+<!-- STICKY ELEMENTS -->
+<a href="tel:+92XXXXXXXXXX" class="sticky-order">🔥 Order Now</a>
+<a href="https://wa.me/92XXXXXXXXXX" class="sticky-wa" target="_blank">💬</a>
+
+<!-- REVIEW NOTIFICATION -->
+<div class="notification" id="notification">
+  <div class="notif-stars">★★★★★</div>
+  <div class="notif-text"><strong>Sanaullah</strong> just rated Love n Grill 5 stars in Haripur!</div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+  (function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  })();
+
+  // Nav scroll
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Ember particles
+  function createEmber() {
+    const hero = document.getElementById('hero');
+    const ember = document.createElement('div');
+    ember.classList.add('ember');
+    const size = Math.random() * 6 + 3;
+    const drift = (Math.random() - 0.5) * 120;
+    ember.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      bottom:-10px;
+      --drift:${drift}px;
+      animation-duration:${Math.random()*4+4}s;
+      animation-delay:${Math.random()*3}s;
+      opacity:0;
+    `;
+    hero.appendChild(ember);
+    setTimeout(() => ember.remove(), 9000);
+  }
+  setInterval(createEmber, 400);
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => revealObs.observe(el));
+
+  // Menu tabs
+  function showTab(name, btn) {
+    document.querySelectorAll('.menu-tab-content').forEach(t => t.style.display = 'none');
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(name).style.display = 'block';
+    btn.classList.add('active');
+  }
+
+  // Notification popup
+  setTimeout(() => {
+    const notif = document.getElementById('notification');
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 5000);
+  }, 4000);
+  setInterval(() => {
+    const names = ['Zainab', 'Ali Raza', 'Hassan', 'Ayesha', 'Usman', 'Fatima'];
+    const msgs = [
+      'just booked a table for 4!',
+      'rated us 5 stars in Haripur!',
+      'ordered the Special Pizza!',
+      'just left a 5-star review!'
+    ];
+    const notif = document.getElementById('notification');
+    notif.querySelector('strong').textContent = names[Math.floor(Math.random()*names.length)];
+    notif.querySelector('.notif-text').innerHTML = `<strong>${names[Math.floor(Math.random()*names.length)]}</strong> ${msgs[Math.floor(Math.random()*msgs.length)]}`;
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 5000);
+  }, 18000)
+  // Booking handler
+  function handleBooking() {
+    alert('✦ Thank you! Your reservation request has been received. Our team will confirm via WhatsApp shortly.');
+  }
+</script>
+
+<!-- ═══════════════════════════════════════════════════
+     NETLIFY IDENTITY  (required for Decap CMS login)
+════════════════════════════════════════════════════ -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('init', user => {
+      if (!user) {
+        window.netlifyIdentity.on('login', () => {
+          document.location.href = '/admin/';
+        });
+      }
+    });
+  }
+</script>
+
+<!-- ═══════════════════════════════════════════════════
+     CMS CONTENT LOADER
+     Reads JSON files saved by Decap CMS and injects
+     them into the page. Falls back silently on errors.
+════════════════════════════════════════════════════ -->
+<script>
+(async function loadCMS() {
+
+  /* ── fetch helper ──────────────────────────────── */
+  async function get(path) {
+    try {
+      const r = await fetch(path + '?_=' + Date.now());
+      return r.ok ? await r.json() : null;
+    } catch { return null; }
+  }
+
+  function stars(n) {
+    n = parseInt(n) || 5;
+    return '★'.repeat(n) + '☆'.repeat(5 - n);
+  }
+
+  /* ── Re-init scroll reveals for dynamic content ── */
+  function observe(el) {
+    el.classList.add('reveal');
+    revealObs.observe(el);
+  }
+
+  /* ══════════════════════════════════════════════
+     1. SETTINGS — phone, WhatsApp, social, banner
+  ══════════════════════════════════════════════ */
+  const S = await get('/content/settings.json');
+  if (S) {
+    // Banner
+    const banner = document.querySelector('.offer-banner');
+    if (banner) {
+      if (S.show_banner === false) {
+        banner.style.display = 'none';
+      } else if (S.offer_banner) {
+        banner.textContent = S.offer_banner;
+      }
+    }
+
+    // Sticky order button
+    const orderBtn = document.querySelector('.sticky-order');
+    if (orderBtn && S.phone) orderBtn.href = 'tel:' + S.phone.replace(/\s/g,'');
+
+    // WhatsApp button
+    const waBtn = document.querySelector('.sticky-wa');
+    if (waBtn && S.whatsapp) waBtn.href = 'https://wa.me/' + S.whatsapp;
+
+    // Call Now button in location section
+    document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+      if (S.phone) a.href = 'tel:' + S.phone.replace(/\s/g,'');
+    });
+
+    // Get Directions button
+    const dirBtn = document.querySelector('.loc-btns .btn-primary');
+    if (dirBtn && S.maps_url) dirBtn.href = S.maps_url;
+
+    // Location info rows
+    document.querySelectorAll('.info-text').forEach(el => {
+      const s = el.querySelector('strong');
+      if (!s) return;
+      if (s.textContent === 'Address'         && S.address) el.innerHTML = '<strong>Address</strong>' + S.address;
+      if (s.textContent === 'Opening Hours'   && S.hours)   el.innerHTML = '<strong>Opening Hours</strong>' + S.hours;
+      if (s.textContent === 'Call / WhatsApp' && S.phone)   el.innerHTML = '<strong>Call / WhatsApp</strong>' + S.phone;
+    });
+
+    // Footer contact column (2nd .footer-links list)
+    const footerLists = document.querySelectorAll('.footer-links');
+    if (footerLists[1]) {
+      const items = footerLists[1].querySelectorAll('a');
+      if (items[0] && S.phone)   items[0].textContent = S.phone;
+      if (items[1] && S.address) items[1].textContent = S.address;
+      if (items[2] && S.hours)   items[2].textContent = S.hours;
+      if (items[3] && S.email)   items[3].textContent = S.email;
+    }
+
+    // Footer social links
+    if (footerLists[2]) {
+      footerLists[2].querySelectorAll('a').forEach(a => {
+        const t = a.textContent;
+        if (t.includes('Instagram') && S.instagram) a.href = S.instagram;
+        if (t.includes('Facebook')  && S.facebook)  a.href = S.facebook;
+        if (t.includes('TikTok')    && S.tiktok)    a.href = S.tiktok;
+        if (t.includes('WhatsApp')  && S.whatsapp)  a.href = 'https://wa.me/' + S.whatsapp;
+      });
+    }
+  }
+
+  /* ══════════════════════════════════════════════
+     2. HERO — eyebrow, title, subtitle
+  ══════════════════════════════════════════════ */
+  const H = await get('/content/hero.json');
+  if (H) {
+    const ey = document.querySelector('.hero-eyebrow');
+    if (ey && H.eyebrow) ey.textContent = H.eyebrow;
+
+    const ht = document.querySelector('.hero-title');
+    if (ht) ht.innerHTML = (H.title_line1 || '') + '<br><em>' + (H.title_line2 || '') + '</em>';
+
+    const sub = document.querySelector('.hero-subtitle');
+    if (sub && H.subtitle) sub.textContent = H.subtitle;
+  }
+
+  /* ══════════════════════════════════════════════
+     3. ABOUT — story, stats
+  ══════════════════════════════════════════════ */
+  const A = await get('/content/about.json');
+  if (A) {
+    const ec = document.querySelector('.exp-content');
+    if (ec) {
+      const lbl = ec.querySelector('.section-label');
+      if (lbl && A.label) lbl.textContent = A.label;
+
+      const ttl = ec.querySelector('.section-title');
+      if (ttl && A.title) ttl.innerHTML = A.title.replace('—', '—<br>');
+
+      const ps = ec.querySelectorAll('p.reveal');
+      if (ps[0] && A.paragraph1) ps[0].textContent = A.paragraph1;
+      if (ps[1] && A.paragraph2) ps[1].textContent = A.paragraph2;
+    }
+    const nums   = document.querySelectorAll('.stat-num');
+    const labels = document.querySelectorAll('.stat-label');
+    if (nums[0])   nums[0].textContent   = A.stat1_num   || nums[0].textContent;
+    if (labels[0]) labels[0].textContent = A.stat1_label || labels[0].textContent;
+    if (nums[1])   nums[1].textContent   = A.stat2_num   || nums[1].textContent;
+    if (labels[1]) labels[1].textContent = A.stat2_label || labels[1].textContent;
+    if (nums[2])   nums[2].textContent   = A.stat3_num   || nums[2].textContent;
+    if (labels[2]) labels[2].textContent = A.stat3_label || labels[2].textContent;
+  }
+
+  /* ══════════════════════════════════════════════
+     4. FEATURED DISHES — 4-card grid
+  ══════════════════════════════════════════════ */
+  const FD = await get('/content/featured-dishes.json');
+  if (FD && FD.dishes && FD.dishes.length) {
+    const grid = document.querySelector('.dishes-grid');
+    if (grid) {
+      grid.innerHTML = FD.dishes.map(d => `
+        <div class="dish-card reveal">
+          ${d.badge ? `<span class="dish-featured">${d.badge}</span>` : ''}
+          ${d.image
+            ? `<img src="${d.image}" alt="${d.name}" style="width:100%;height:140px;object-fit:cover;margin-bottom:16px;">`
+            : `<span class="dish-emoji">${d.emoji || '🍽️'}</span>`}
+          <div class="dish-name">${d.name}</div>
+          <div class="dish-desc">${d.description}</div>
+          <div class="dish-tag">${d.tag}</div>
+        </div>`).join('');
+      grid.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    }
+  }
+
+  /* ══════════════════════════════════════════════
+     5. REVIEWS
+  ══════════════════════════════════════════════ */
+  const RV = await get('/content/reviews.json');
+  if (RV && RV.reviews && RV.reviews.length) {
+    const grid = document.querySelector('.reviews-grid');
+    if (grid) {
+      grid.innerHTML = RV.reviews.map(r => `
+        <div class="review-card reveal">
+          <div class="review-quote">"</div>
+          <div class="review-stars">${stars(r.stars)}</div>
+          <div class="review-text">${r.text}</div>
+          <div class="review-author">${r.name} <span>— ${r.location}</span></div>
+        </div>`).join('');
+      grid.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    }
+  }
+
+  /* ══════════════════════════════════════════════
+     6. FULL MENU — tab-based categories
+  ══════════════════════════════════════════════ */
+  const catFiles = ['pizza','grill','sides','drinks'];
+  const cats = (await Promise.all(catFiles.map(f => get('/content/menu/' + f + '.json'))))
+    .filter(Boolean)
+    .sort((a,b) => (a.order||0) - (b.order||0));
+
+  if (cats.length) {
+    const menuSec = document.getElementById('menu');
+    if (menuSec) {
+      // Build new tab bar + content
+      const tabBar = menuSec.querySelector('.menu-tabs');
+      const existingContent = menuSec.querySelectorAll('.menu-tab-content');
+      existingContent.forEach(el => el.remove());
+      if (tabBar) tabBar.remove();
+
+      // Inject new tabs
+      const newTabBar = document.createElement('div');
+      newTabBar.style.textAlign = 'center';
+      newTabBar.innerHTML = `<div class="menu-tabs reveal">` +
+        cats.map((c,i) =>
+          `<button class="tab-btn${i===0?' active':''}" onclick="showTab('cms-${c.category_id}',this)">${c.emoji} ${c.category_name}</button>`
+        ).join('') + `</div>`;
+
+      // Insert after menu-header
+      const menuHeader = menuSec.querySelector('.menu-header');
+      menuHeader.after(newTabBar);
+      revealObs.observe(newTabBar.querySelector('.menu-tabs'));
+
+      // Inject content panels
+      const reserveDiv = menuSec.querySelector('[href="#reservation"]')?.closest('div') || null;
+
+      cats.forEach((cat, i) => {
+        const panel = document.createElement('div');
+        panel.id = 'cms-' + cat.category_id;
+        panel.className = 'menu-tab-content';
+        if (i !== 0) panel.style.display = 'none';
+        panel.innerHTML = `<div class="menu-items">` +
+          (cat.items || []).map(item => `
+            <div class="menu-item">
+              ${item.image ? `<img src="${item.image}" alt="${item.name}" style="width:100%;height:110px;object-fit:cover;margin-bottom:10px;">` : ''}
+              <div class="menu-item-name">
+                ${item.name}
+                ${item.badge ? `<span style="background:var(--red);color:#fff;font-size:0.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;margin-left:8px;">${item.badge}</span>` : ''}
+              </div>
+              <div class="menu-item-desc">${item.description}</div>
+              <div class="menu-item-price">${item.price_label}</div>
+            </div>`).join('') +
+          `</div>`;
+
+        if (reserveDiv) menuSec.insertBefore(panel, reserveDiv);
+        else menuSec.appendChild(panel);
+      });
+    }
+  }
+
+  /* ══════════════════════════════════════════════
+     7. GALLERY — replace emoji placeholders
+  ══════════════════════════════════════════════ */
+  const GL = await get('/content/gallery.json');
+  if (GL && GL.images && GL.images.length) {
+    const galleryGrid = document.querySelector('.gallery-grid');
+    if (galleryGrid) {
+      galleryGrid.innerHTML = GL.images.slice(0,6).map((img, i) => `
+        <div class="gallery-cell${i===0?' gallery-large':''}">
+          <div class="gallery-inner" style="background:none;padding:0;">
+            <img src="${img.image}" alt="${img.alt||''}"
+              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="gallery-overlay"></div>
+        </div>`).join('');
+    }
+  }
+
+})();
+</script>
+</body>
+</html>

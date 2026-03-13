@@ -1,0 +1,11 @@
+{
+  "category_id": "drinks",
+  "category_name": "Beverages",
+  "category_desc": "Cold, fresh, and refreshing",
+  "emoji": "\uD83E\uDD64",
+  "order": 4,
+  "items": [
+    { "name": "Soft Drinks",      "description": "Chilled classic beverages to accompany your meal.",               "price_label": "Available", "badge": "", "image": "" },
+    { "name": "Fresh Beverages",  "description": "Seasonal fresh drinks made in-house daily.",                      "price_label": "Seasonal",  "badge": "", "image": "" }
+  ]
+}

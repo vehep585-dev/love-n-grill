@@ -1,0 +1,134 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: images/uploads
+public_folder: /images/uploads
+
+publish_mode: editorial_workflow
+
+collections:
+
+  # ─── SITE SETTINGS ────────────────────────────────────
+  - name: settings
+    label: "⚙️ Site Settings"
+    files:
+      - name: site
+        label: "General Settings"
+        file: content/settings.json
+        fields:
+          - { label: "Restaurant Name",        name: restaurant_name, widget: string,  default: "Love n Grill" }
+          - { label: "Phone Number",            name: phone,           widget: string,  default: "+92 XXX XXXXXXX" }
+          - { label: "WhatsApp (digits only, e.g. 923001234567)", name: whatsapp, widget: string, default: "923001234567" }
+          - { label: "Email Address",           name: email,           widget: string,  default: "info@lovengrill.pk" }
+          - { label: "Address",                 name: address,         widget: string,  default: "Haripur, Khyber Pakhtunkhwa, Pakistan" }
+          - { label: "Opening Hours",           name: hours,           widget: string,  default: "Daily: 12:00 PM – 11:00 PM" }
+          - { label: "Google Maps URL",         name: maps_url,        widget: string,  default: "https://maps.google.com" }
+          - { label: "Instagram URL",           name: instagram,       widget: string,  default: "https://instagram.com/lovengrill" }
+          - { label: "Facebook URL",            name: facebook,        widget: string,  default: "https://facebook.com/lovengrill" }
+          - { label: "TikTok URL",              name: tiktok,          widget: string,  default: "https://tiktok.com/@lovengrill" }
+          - { label: "Offer Banner Text",       name: offer_banner,    widget: string,  default: "🔥 GRAND OFFER — 10% OFF on your first visit — Show this to our staff!" }
+          - { label: "Show Offer Banner",       name: show_banner,     widget: boolean, default: true }
+
+  # ─── HOMEPAGE ─────────────────────────────────────────
+  - name: homepage
+    label: "🏠 Homepage"
+    files:
+
+      - name: hero
+        label: "Hero Section"
+        file: content/hero.json
+        fields:
+          - { label: "Eyebrow (small text above title)", name: eyebrow,     widget: string }
+          - { label: "Title Line 1",                     name: title_line1, widget: string }
+          - { label: "Title Line 2 (italic gold)",       name: title_line2, widget: string }
+          - { label: "Subtitle",                         name: subtitle,    widget: text   }
+
+      - name: about
+        label: "About / Experience Section"
+        file: content/about.json
+        fields:
+          - { label: "Section Label",  name: label,      widget: string }
+          - { label: "Section Title",  name: title,      widget: string }
+          - { label: "Paragraph 1",    name: paragraph1, widget: text   }
+          - { label: "Paragraph 2",    name: paragraph2, widget: text   }
+          - { label: "Stat 1 — Number", name: stat1_num,   widget: string }
+          - { label: "Stat 1 — Label",  name: stat1_label, widget: string }
+          - { label: "Stat 2 — Number", name: stat2_num,   widget: string }
+          - { label: "Stat 2 — Label",  name: stat2_label, widget: string }
+          - { label: "Stat 3 — Number", name: stat3_num,   widget: string }
+          - { label: "Stat 3 — Label",  name: stat3_label, widget: string }
+
+      - name: featured_dishes
+        label: "Featured Dishes (4-card grid)"
+        file: content/featured-dishes.json
+        fields:
+          - label: "Dishes"
+            name: dishes
+            widget: list
+            max: 4
+            fields:
+              - { label: "Name",        name: name,        widget: string }
+              - { label: "Description", name: description, widget: text   }
+              - { label: "Tag (e.g. Must Try)", name: tag,   widget: string }
+              - { label: "Badge (e.g. Signature) — leave blank to hide", name: badge, widget: string, required: false }
+              - { label: "Emoji",       name: emoji,       widget: string, default: "🍕" }
+              - { label: "Photo",       name: image,       widget: image,  required: false }
+
+      - name: reviews
+        label: "Customer Reviews"
+        file: content/reviews.json
+        fields:
+          - label: "Reviews"
+            name: reviews
+            widget: list
+            max: 6
+            fields:
+              - { label: "Name",     name: name,     widget: string }
+              - { label: "Location", name: location, widget: string, default: "Haripur" }
+              - { label: "Review",   name: text,     widget: text   }
+              - label: "Stars"
+                name: stars
+                widget: select
+                options: ["5","4","3"]
+                default: "5"
+
+  # ─── FULL MENU ────────────────────────────────────────
+  - name: menu
+    label: "🍽️ Full Menu"
+    folder: content/menu
+    create: true
+    slug: "{{fields.category_id}}"
+    identifier_field: category_id
+    summary: "{{category_name}}"
+    fields:
+      - { label: "Category ID (no spaces, e.g. pizza)", name: category_id,   widget: string }
+      - { label: "Category Name",                        name: category_name, widget: string }
+      - { label: "Category Description",                 name: category_desc, widget: string }
+      - { label: "Emoji Icon",                           name: emoji,         widget: string, default: "🍽️" }
+      - { label: "Display Order (lower = first)",        name: order,         widget: number, default: 1 }
+      - label: "Menu Items"
+        name: items
+        widget: list
+        fields:
+          - { label: "Item Name",    name: name,        widget: string }
+          - { label: "Description",  name: description, widget: text   }
+          - { label: "Price Label (e.g. Premium, Classic)", name: price_label, widget: string }
+          - { label: "Badge (e.g. Bestseller) — leave blank to hide", name: badge, widget: string, required: false }
+          - { label: "Photo",        name: image,       widget: image,  required: false }
+
+  # ─── GALLERY ──────────────────────────────────────────
+  - name: gallery
+    label: "📸 Gallery"
+    files:
+      - name: gallery
+        label: "Gallery Images"
+        file: content/gallery.json
+        fields:
+          - label: "Images"
+            name: images
+            widget: list
+            max: 9
+            fields:
+              - { label: "Image",   name: image, widget: image  }
+              - { label: "Caption", name: alt,   widget: string }
